@@ -1,6 +1,6 @@
 {% set name = "CppInterOp" %}
-{% set build_number = 1 %}
-{% set version = "1.1.0" %}
+{% set build_number = 0 %}
+{% set version = "1.2.0" %}
 {% set revision_tag = "v"+version %}
 
 package:
@@ -9,15 +9,14 @@ package:
 
 source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
-    sha256: 29377ba4fecd82395efd2fefcaa911fe72396d78293607852bd0e9b9ab65d1dc
+    sha256: b3cf25f500624fe12ffc40f858a04c46daea808298e64d924b594eb35ca1c806
     folder: cppinterop
     patches:
-      - patches/cppinterop/cppinterop-1.1.0-0001-cppinterop-Add-missing-dependencies.patch
+      - patches/cppinterop/0001-cmake-Work-around-a-bug-in-the-llvm-config.patch
   - path: patches
     folder: add_patches
 
 build:
-  skip: true  # [win]
   number: {{ build_number }}
   string: clang{{ (clangdev or "None").split(".")[0] }}_repl_h{{ PKG_HASH }}_{{ build_number }}
 
@@ -28,7 +27,6 @@ requirements:
     - make  # [unix]
     - ninja  # [win]
     - {{ compiler('cxx') }}
-    - wget
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
@@ -42,7 +40,7 @@ requirements:
     - backtrace  # [unix and x86]
     - libxml2
     - zlib
-    - zstd
+    - zstd  # [not win]
     - libcxx {{ cxx_compiler_version }}  # [osx]
     - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   run_constrained:
@@ -56,7 +54,7 @@ requirements:
 test:
   commands:
     - test -f $PREFIX/lib/libclangCppInterOp${SHLIB_EXT}  # [unix]
-    - if not exist %LIBRARY_BIN%\\libclangCppInterOp.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\\clangCppInterOp.dll exit 1  # [win]
 
 about:
   home: https://github.com/compiler-research/CppInterOp
