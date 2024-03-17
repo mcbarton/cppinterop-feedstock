@@ -1,5 +1,5 @@
 {% set name = "CppInterOp" %}
-{% set build_number = 2 %}
+{% set build_number = 3 %}
 {% set version = "1.2.0" %}
 {% set revision_tag = "v"+version %}
 
@@ -9,10 +9,14 @@ package:
   version: {{ version }}
 
 source:
-#  - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
-  - url: https://github.com/compiler-research/CppInterOp/archive/refs/heads/main.tar.gz
-    sha256: 6a5dc0dbf2cfb01c712176d9e5d59e1473287a2587ce4c7d1ee43e5c49e6e78a
+  - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
+    sha256: b3cf25f500624fe12ffc40f858a04c46daea808298e64d924b594eb35ca1c806
     folder: cppinterop
+    patches:
+      - patches/cppinterop/0001-cmake-Work-around-a-bug-in-the-llvm-config.patch
+      - patches/cppinterop/0002-cmake-CppInterOp-install-fix.patch
+      - patches/cppinterop/0003-Implement-detection-of-resource-and-include-dirs.patch
+      - patches/cppinterop/0004-cmake-config-fix-library-suffix-and-prefix.patch
   - path: patches
     folder: add_patches
 
