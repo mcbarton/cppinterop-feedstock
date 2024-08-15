@@ -1,5 +1,5 @@
 {% set name = "cppinterop" %}
-{% set build_number = 1 %}
+{% set build_number = 2 %}
 {% set version = "1.3.0" %}
 {% set revision_tag = "v"+version %}
 
@@ -19,9 +19,7 @@ source:
 build:
   number: {{ build_number }}
   string: clang{{ (clangdev or "None").split(".")[0] }}_repl_h{{ PKG_HASH }}_{{ build_number }}
-  error_overlinking: false # FIXME: We should adjust the ignore_run_exports.
   ignore_run_exports:
-    - zstd  # [win]
     - libxml2
     - backtrace
     - libllvm{{ clangdev }}
@@ -34,13 +32,12 @@ requirements:
     #- clang  # [osx]
     - make  # [unix]
     - ninja  # [win]
+    - {{ stdlib('c') }}
     - {{ compiler('cxx') }}
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
     - git-lfs
-    - libcxx {{ cxx_compiler_version }}  # [osx]
-    - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
   host:
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
@@ -48,22 +45,18 @@ requirements:
     - backtrace  # [unix and x86]
     - libxml2
     - zlib
-    - zstd  # [unix]
-    - libcxx {{ cxx_compiler_version }}  # [osx]
-    - libstdcxx-ng {{ cxx_compiler_version }}  # [linux]
+    - zstd
+  run:
+    # clang_bootstrap has no run-export
+    - libcxx >={{ cxx_compiler_version }}  # [osx]
   run_constrained:
     - llvm {{ clangdev }}
     - llvmdev {{ clangdev }}
     - clangdev {{ clangdev }}
-  run:
-    - libcxx {{ cxx_compiler_version }}  # [osx]
-    - libstdcxx-ng >={{ cxx_compiler_version }}  # [linux]
 
 test:
   requires:
       - {{ compiler('cxx') }}
-      - libcxx {{ cxx_compiler_version }}  # [osx]
-      - libstdcxx-ng >={{ cxx_compiler_version }}  # [linux]
       - cmake
       - ninja
   files:
