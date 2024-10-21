@@ -13,11 +13,11 @@ channel_sources:
 channel_targets:
 - conda-forge main
 clangdev:
-- '18'
+- '19'
 cxx_compiler:
 - gxx
 cxx_compiler_version:
-- '12'
+- '13'
 docker_image:
 - quay.io/condaforge/linux-anvil-cos7-x86_64
 libxml2:

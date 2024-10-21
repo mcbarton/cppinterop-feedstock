@@ -11,11 +11,11 @@ channel_sources:
 channel_targets:
 - conda-forge main
 clangdev:
-- '18'
+- '19'
 cxx_compiler:
 - clang_bootstrap
 cxx_compiler_version:
-- '16'
+- '17'
 libxml2:
 - '2'
 macos_machine:
