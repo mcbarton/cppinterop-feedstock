@@ -1,6 +1,6 @@
 {% set name = "cppinterop" %}
 {% set build_number = 0 %}
-{% set version = "1.4.0" %}
+{% set version = "1.5.0" %}
 {% set revision_tag = "v"+version %}
 
 
@@ -10,7 +10,7 @@ package:
 
 source:
   - url: https://github.com/compiler-research/CppInterOp/archive/refs/tags/{{ revision_tag }}.tar.gz
-    sha256: 566e3818de97656990d302a916a2d6925db33c7765a762f36ba28dead03c34a8
+    sha256: d29d610adeb23820533a456714c795de4e458153e04a003d26ac8b0326a3469f
     folder: cppinterop
 
 build:
@@ -53,12 +53,12 @@ requirements:
 
 test:
   requires:
-      - {{ compiler('cxx') }}
-      - cmake
-      - ninja
+    - {{ compiler('cxx') }}
+    - cmake
+    - ninja
   files:
-      - CMakeLists.txt
-      - test.cpp
+    - CMakeLists.txt
+    - test.cpp
   commands:
     - test -f $PREFIX/lib/libclangCppInterOp${SHLIB_EXT}  # [unix]
     - if not exist %LIBRARY_BIN%\\clangCppInterOp.dll exit 1  # [win]
