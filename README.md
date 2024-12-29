@@ -145,7 +145,7 @@ mamba repoquery whoneeds cppinterop --channel conda-forge
 mamba repoquery depends cppinterop --channel conda-forge
 ```
 
-Throubleshooting
+Troubleshooting
 ================
 
 1. Apply this patch so you can more easily run commands inside the container (adding `--privileged` to the `docker run` args can also be useful if you want to get at proper debugging tools):
